@@ -1,0 +1,142 @@
+version: '3.8'
+services:
+  ipandreu123:
+    build: ./ipandreu
+    container_name: ipandreu123
+    ports:
+      - "8080:8080"
+    labels:
+      collect_logs_with_filebeat: "true"
+    depends_on:
+      - mongodb
+    networks:
+      - ipandreu-network
+
+  mongodb:
+    image: mongo
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+      - ./docker/mongo/mongodb-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    networks:
+      - ipandreu-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    environment:
+      - "discovery.type=single-node"
+    volumes:
+      - ./docker/elk/elasticsearch/data:/usr/share/elasticsearch/data:rw              # Persistence data
+    networks:
+      - ipandreu-network
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.2.0
+    container_name: logstash
+    ports:
+      - "25826:25826"
+      - "5044:5044"
+    volumes:
+      - ./docker/elk/logstash/config:/usr/share/logstash/pipeline:ro                # Pipeline configuration
+    restart: on-failure
+    depends_on:
+      - elasticsearch
+    networks:
+      - ipandreu-network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.2.0
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    restart: on-failure
+    depends_on:
+      - elasticsearch
+    networks:
+      - ipandreu-network
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.2.0
+    container_name: filebeat
+    volumes:
+      - ./docker/elk/filebeat/filebeat.docker.yml:/usr/share/filebeat/filebeat.yml:ro # Configuration file
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro           # Docker logs
+      - /var/run/docker.sock:/var/run/docker.sock:ro                       # Additional information about containers
+      - ./docker/elk/filebeat/data:/usr/share/filebeat/data:rw                        # Persistence data
+    user: root                                                             # Allow access to log files and docker.sock
+    restart: on-failure
+    depends_on:
+      - logstash
+    networks:
+      - ipandreu-network
+
+  prometheus:
+    image: prom/prometheus:v2.31.1
+    container_name: prometheus
+    command: --config.file=/etc/prometheus/prometheus.yml --log.level=debug
+    extra_hosts:
+      - "docker.for.mac.localhost:host-gateway"
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - ipandreu-network
+
+  grafana:
+    image: grafana/grafana:8.2.3
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./docker/grafana/config/grafana.ini:/etc/grafana/grafana.ini
+    user: '104'
+    links:
+      - prometheus
+    networks:
+      - ipandreu-network
+
+  eureka:
+    build: ./eureka
+    container_name: eureka
+    restart: always
+    ports:
+      - "8761:8761"
+    labels:
+      collect_logs_with_filebeat: "true"
+    depends_on:
+      - ipandreu
+    networks:
+      - ipandreu-network
+
+  zuul:
+    build: ./zuul
+    container_name: zuul
+    restart: always
+    ports:
+      - "7000:7000"
+    labels:
+      collect_logs_with_filebeat: "true"
+    depends_on:
+      - eureka
+      - ipandreu
+    networks:
+      - ipandreu-network
+
+volumes:
+  mongo-data:
+  grafana-storage:
+
+networks:
+  ipandreu-network:
+    driver: bridge

@@ -1,0 +1,24 @@
+# Spring properties
+spring:
+  application:
+    name: zuul
+
+# Server
+server:
+  port: 7000
+
+
+# Api-Gate-Way
+zuul:
+  ignoredServices: '*'
+  routes:
+    ipandreu:
+      path: /customers/**
+      url: http://docker.for.mac.localhost:8080
+      serviceId: ipandreu
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://docker.for.mac.localhost:8761/eureka

@@ -1,0 +1,54 @@
+HELP.md
+target/
+logs/
+*.log
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+*.txt
+grafana.ini
+.DS_Store
+###Docker###
+docker/elk/elasticsearch/data/
+docker/elk/filebeat/data/
+*.dii
+*.dim
+*.fdt
+*.fdx
+*.fnm
+*.si
+*.doc
+*.pos
+*.tim
+*.tip
+*.dvd
+*.dvm
+*.ckp
+data.json
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/

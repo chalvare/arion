@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    labels:
+      collect_logs_with_filebeat: "true"

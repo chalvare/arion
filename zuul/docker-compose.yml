@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: zuul
+    ports:
+      - "7000:7000"
+    labels:
+      collect_logs_with_filebeat: "true"
