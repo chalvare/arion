@@ -2,11 +2,21 @@
 spring:
   application:
     name: zuul
+  datasource:
+    url: jdbc:mysql://localhost:3306/arion?useSLL=false&serverTimezone=UTC&useLegacyDateTimeCode=false
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
 
 # Server
 server:
   port: 7000
-
 
 # Api-Gate-Way
 zuul:
@@ -14,10 +24,14 @@ zuul:
   routes:
     ipandreu:
       path: /customers/**
-      url: http://docker.for.mac.localhost:8080
+      url: http://localhost:8080
       serviceId: ipandreu
 
-
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
 eureka:
   client:
     serviceUrl:
