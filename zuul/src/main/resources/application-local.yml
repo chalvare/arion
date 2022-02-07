@@ -3,7 +3,7 @@ spring:
   application:
     name: zuul
   datasource:
-    url: jdbc:mysql://docker.for.mac.localhost:3306/arion?useSLL=false&serverTimezone=UTC&useLegacyDateTimeCode=false
+    url: jdbc:mysql://localhost:3306/arion?useSLL=false&serverTimezone=UTC&useLegacyDateTimeCode=false
     username: root
     password: root
   jpa:
@@ -24,10 +24,10 @@ zuul:
   routes:
     ipandreu:
       path: /customers/**
-      url: http://docker.for.mac.localhost:8080
+      url: http://localhost:8080
       serviceId: ipandreu
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://docker.for.mac.localhost:8761/eureka
+      defaultZone: http://localhost:8761/eureka
