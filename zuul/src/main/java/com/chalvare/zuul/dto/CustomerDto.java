@@ -8,12 +8,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-public class NuevoUsuario {
+public class CustomerDto {
 
     @NotBlank
-    private String nombre;
+    private String name;
     @NotBlank
-    private String nombreUsuario;
+    private String nameCustomer;
     @Email
     private String email;
     @NotBlank

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * Clase que implementa los privilegios de cada usuario
  * UserDetails es una clase propia de Spring Security
  */
-public class UsuarioMain implements UserDetails {
+public class UserMain implements UserDetails {
 
     private String nombre;
     private String usuario;
@@ -25,7 +25,7 @@ public class UsuarioMain implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     //Constructor
-    public UsuarioMain(String nombre, String usuario, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserMain(String nombre, String usuario, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.nombre = nombre;
         this.usuario = usuario;
         this.email = email;
@@ -34,15 +34,15 @@ public class UsuarioMain implements UserDetails {
     }
 
     //Metodo que asigna los privilegios (autorización)
-    public static UsuarioMain build(Usuario usuario){
+    public static UserMain build(Customer customer){
         //Convertimos la clase Rol a la clase GrantedAuthority
         List<GrantedAuthority> authorities =
-                usuario.getRoles()
+                customer.getRoles()
                         .stream()
-                        .map(rol -> new SimpleGrantedAuthority(rol.getRolNombre().name()))
+                        .map(rol -> new SimpleGrantedAuthority(rol.getRoleName().name()))
                         .collect(Collectors.toList());
-        return new UsuarioMain(usuario.getNombre(), usuario.getNombreUsuario(), usuario.getEmail(),
-                usuario.getPassword(), authorities);
+        return new UserMain(customer.getName(), customer.getNameCustomer(), customer.getEmail(),
+                customer.getPassword(), authorities);
     }
 
     //@Override los que tengan esta anotación

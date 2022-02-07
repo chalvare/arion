@@ -1,6 +1,6 @@
 package com.chalvare.zuul.security.entity;
 
-import com.chalvare.zuul.security.enums.RolNombre;
+import com.chalvare.zuul.security.enums.RoleName;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-public class Rol {
+public class Role {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private int id;
@@ -16,12 +16,12 @@ public class Rol {
     @NotNull
     //Se indica que va a ser un Enum de tipo String
     @Enumerated(EnumType.STRING)
-    private RolNombre rolNombre;
+    private RoleName roleName;
 
-    public Rol() {
+    public Role() {
     }
 
-    public Rol(@NotNull RolNombre rolNombre) {
-        this.rolNombre = rolNombre;
+    public Role(@NotNull RoleName roleName) {
+        this.roleName = roleName;
     }
 }

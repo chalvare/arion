@@ -1,10 +1,9 @@
 package com.chalvare.zuul.jwt;
 
-import com.chalvare.zuul.security.entity.UsuarioMain;
+import com.chalvare.zuul.security.entity.UserMain;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -31,8 +30,8 @@ public class JwtProvider {
      * signWith --> Firma
      */
     public String generateToken(Authentication authentication){
-        UsuarioMain usuarioMain = (UsuarioMain) authentication.getPrincipal();
-        return Jwts.builder().setSubject(usuarioMain.getUsername())
+        UserMain userMain = (UserMain) authentication.getPrincipal();
+        return Jwts.builder().setSubject(userMain.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret)

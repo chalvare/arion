@@ -1,6 +1,5 @@
 package com.chalvare.zuul.security.entity;
 
-import jdk.jfr.DataAmount;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,17 +9,17 @@ import java.util.Set;
 
 @Entity
 @Data
-public class Usuario {
+public class Customer {
     @Id
     //Id Auto Increment
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUsuario;
+    private int idCustomer;
     //Decorador para indicar que no puede ser null el campo
     @NotNull
-    private String nombre;
+    private String name;
     @NotNull
     @Column(unique = true)
-    private String nombreUsuario;
+    private String nameCustomer;
     @NotNull
     @Column(unique = true)
     private String email;
@@ -35,22 +34,22 @@ public class Usuario {
     // join columns hace referencia a la columna que hace referencia hacia esta
     // Es decir la tabla usuario_rol va a tener un campo que se llama id_usuario
     // inverseJoinColumns = el inverso, hace referencia a rol
-    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "id_usuario"),
-            inverseJoinColumns = @JoinColumn(name = "rol_id"))
-    private Set<Rol> roles = new HashSet<>();
+    @JoinTable(name = "customer_role", joinColumns = @JoinColumn(name = "id_customer"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     //Constuctor sin Id ni Roles
-    public Usuario(@NotNull String nombre,
-                   @NotNull String nombreUsuario,
-                   @NotNull String email,
-                   @NotNull String password) {
-        this.nombre = nombre;
-        this.nombreUsuario = nombreUsuario;
+    public Customer(@NotNull String name,
+                    @NotNull String nameCustomer,
+                    @NotNull String email,
+                    @NotNull String password) {
+        this.name = name;
+        this.nameCustomer = nameCustomer;
         this.email = email;
         this.password = password;
     }
 
-    public Usuario(){
+    public Customer(){
 
     }
 }
