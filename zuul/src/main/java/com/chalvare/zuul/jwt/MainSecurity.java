@@ -23,12 +23,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MainSecurity extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     //Devuelve el mensaje de no autorizado
+    private final JwtEntryPoint jwtEntryPoint;
+
     @Autowired
-    JwtEntryPoint jwtEntryPoint;
+    public MainSecurity(UserDetailsServiceImpl userDetailsService, JwtEntryPoint jwtEntryPoint) {
+        this.userDetailsService = userDetailsService;
+        this.jwtEntryPoint = jwtEntryPoint;
+    }
 
     @Bean
     public JwtTokenFilter jwtTokenFilter(){
@@ -55,10 +59,6 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

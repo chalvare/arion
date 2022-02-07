@@ -1,7 +1,6 @@
 package com.chalvare.zuul.service;
 
-import com.chalvare.zuul.security.entity.Customer;
-import com.chalvare.zuul.security.entity.UserMain;
+import com.chalvare.zuul.security.entity.CustomerMain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,8 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     CustomerService customerService;
 
     @Override
-    public UserDetails loadUserByUsername(String nombreUsuario) throws UsernameNotFoundException {
-        Customer customer = customerService.getByCustomer(nombreUsuario).get();
-        return UserMain.build(customer);
+    public UserDetails loadUserByUsername(String nameCustomer) throws UsernameNotFoundException {
+        return CustomerMain.build(customerService.getByCustomer(nameCustomer).get());
     }
 }

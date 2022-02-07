@@ -1,6 +1,6 @@
 package com.chalvare.zuul.jwt;
 
-import com.chalvare.zuul.security.entity.UserMain;
+import com.chalvare.zuul.security.entity.CustomerMain;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,13 +16,13 @@ import java.util.Date;
 public class JwtProvider {
 
     // Implementamos un logger para ver cual metodo da error en caso de falla
-    private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
+    private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
     //Valores que tenemos en el aplicattion.properties
 
-    private String secret = "secret";
+    private static final String SECRET = "secret";
 
-    private int expiration = 43200;
+    private static final int EXPIRATION = 43200;
 
     /**
      *setIssuedAt --> Asigna fecha de creción del token
@@ -30,33 +30,33 @@ public class JwtProvider {
      * signWith --> Firma
      */
     public String generateToken(Authentication authentication){
-        UserMain userMain = (UserMain) authentication.getPrincipal();
-        return Jwts.builder().setSubject(userMain.getUsername())
+        CustomerMain customerMain = (CustomerMain) authentication.getPrincipal();
+        return Jwts.builder().setSubject(customerMain.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + expiration * 1000))
-                .signWith(SignatureAlgorithm.HS512, secret)
+                .setExpiration(new Date(new Date().getTime() + EXPIRATION * 1000))
+                .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
     }
 
     //subject --> Nombre del usuario
     public String getNombreUsuarioFromToken(String token){
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody().getSubject();
     }
 
     public Boolean validateToken(String token){
         try {
-            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
             return true;
         }catch (MalformedJwtException e){
-            logger.error("Token mal formado");
+            logger.error("Bad construction Token");
         }catch (UnsupportedJwtException e){
-            logger.error("Token no soportado");
+            logger.error("No supported Token");
         }catch (ExpiredJwtException e){
-            logger.error("Token expirado");
+            logger.error("Expired Token");
         }catch (IllegalArgumentException e){
-            logger.error("Token vacio");
+            logger.error("Empty Token");
         }catch (SignatureException e){
-            logger.error("Fallo con la firma");
+            logger.error("Fail with the firm");
         }
         return false;
     }

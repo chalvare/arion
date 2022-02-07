@@ -12,8 +12,12 @@ import java.util.Optional;
 @Transactional
 public class CustomerService {
 
+    private final CustomerRepository customerRepository;
+
     @Autowired
-    CustomerRepository customerRepository;
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     public Optional<Customer> getByCustomer(String nameCustomer){
         return customerRepository.findByNameCustomer(nameCustomer);

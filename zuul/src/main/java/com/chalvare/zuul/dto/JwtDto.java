@@ -10,12 +10,12 @@ public class JwtDto {
 
     private String token;
     private String bearer = "Bearer";
-    private String nombreUsuario;
+    private String nameCustomer;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public JwtDto(String token, String nombreUsuario, Collection<? extends GrantedAuthority> authorities) {
+    public JwtDto(String token, String nameCustomer, Collection<? extends GrantedAuthority> authorities) {
         this.token = token;
-        this.nombreUsuario = nombreUsuario;
+        this.nameCustomer = nameCustomer;
         this.authorities = authorities;
     }
 }

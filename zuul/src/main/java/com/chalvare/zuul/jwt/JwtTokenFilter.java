@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 public class JwtTokenFilter extends OncePerRequestFilter {
 
-    private final static Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenFilter.class);
 
     @Autowired
     JwtProvider jwtProvider;
@@ -52,7 +52,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
             }
         }catch (Exception e){
-            logger.error("Fail en el método doFilter " + e.getMessage());
+            LOGGER.error("Fail en el método doFilter {}", e.getMessage());
         }
         filterChain.doFilter(request, response);
     }

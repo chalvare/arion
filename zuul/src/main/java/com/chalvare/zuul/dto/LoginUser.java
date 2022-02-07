@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 public class LoginUser {
 
     @NotBlank
-    private String nombreUsuario;
+    private String nameCustomer;
     @NotBlank
     private String password;
 }

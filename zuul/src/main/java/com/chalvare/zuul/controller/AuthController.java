@@ -1,14 +1,14 @@
 package com.chalvare.zuul.controller;
 
+import com.chalvare.zuul.dto.CustomerDto;
 import com.chalvare.zuul.dto.JwtDto;
 import com.chalvare.zuul.dto.LoginUser;
-import com.chalvare.zuul.dto.CustomerDto;
 import com.chalvare.zuul.jwt.JwtProvider;
 import com.chalvare.zuul.security.entity.Customer;
 import com.chalvare.zuul.security.entity.Role;
 import com.chalvare.zuul.security.enums.RoleName;
-import com.chalvare.zuul.service.RoleService;
 import com.chalvare.zuul.service.CustomerService;
+import com.chalvare.zuul.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +23,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,24 +32,29 @@ import java.util.Set;
 @CrossOrigin
 public class AuthController {
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    public static final String ADMIN = "admin";
+    private final PasswordEncoder passwordEncoder;
+
+    private final AuthenticationManager authenticationManager;
+
+    private final CustomerService customerService;
+
+    private final RoleService roleService;
+
+    private final JwtProvider jwtProvider;
 
     @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
-    CustomerService customerService;
-
-    @Autowired
-    RoleService roleService;
-
-    @Autowired
-    JwtProvider jwtProvider;
+    public AuthController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, CustomerService customerService, RoleService roleService, JwtProvider jwtProvider) {
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.customerService = customerService;
+        this.roleService = roleService;
+        this.jwtProvider = jwtProvider;
+    }
 
     //Espera un json y lo convierte a tipo clase NuevoUsuario
-    @PostMapping("/nuevoUsuario")
-    public ResponseEntity<?> nuevoUsuario(@Valid @RequestBody CustomerDto customerDto,
+    @PostMapping("/signup")
+    public ResponseEntity<String> nuevoUsuario(@Valid @RequestBody CustomerDto customerDto,
                                           BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return new ResponseEntity<>("Campos mal o email invalido", HttpStatus.BAD_REQUEST);
@@ -64,24 +70,25 @@ public class AuthController {
                 customerDto.getEmail(), passwordEncoder.encode(customerDto.getPassword()));
 
         Set<Role> roles = new HashSet<>();
-        roles.add(roleService.getByRoleNombre(RoleName.ROLE_USER).get());
-        if(customerDto.getRoles().contains("admin"))
-            roles.add(roleService.getByRoleNombre(RoleName.ROLE_ADMIN).get());
+        if(roleService.getByRoleName(RoleName.ROLE_USER).isPresent())
+            roles.add(roleService.getByRoleName(RoleName.ROLE_USER).get());
+        if(customerDto.getRoles().contains(ADMIN) && roleService.getByRoleName(RoleName.ROLE_ADMIN).isPresent())
+            roles.add(roleService.getByRoleName(RoleName.ROLE_ADMIN).get());
         customer.setRoles(roles);
 
         customerService.save(customer);
 
-        return new ResponseEntity<>("Usuario creado", HttpStatus.CREATED);
+        return new ResponseEntity<>("customer created", HttpStatus.CREATED);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/signin")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUser loginUser, BindingResult bindingResult){
         if (bindingResult.hasErrors())
-            return new ResponseEntity("Campos mal", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new JwtDto("Empty Token", loginUser.getNameCustomer(), Collections.emptyList()), HttpStatus.BAD_REQUEST);
         Authentication authentication =
                 authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(loginUser.getNombreUsuario(),
+                        new UsernamePasswordAuthenticationToken(loginUser.getNameCustomer(),
                                 loginUser.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateToken(authentication);
