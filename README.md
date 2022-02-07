@@ -1,9 +1,9 @@
 TODO LIST
 
 Alerts  prometheus ¿kibana?
- 
-microservices
 
 swagger
 
-spring token session
+spring token session IMPROVE
+
+Feature toggle token session
