@@ -59,10 +59,10 @@ public class AuthController {
         if(bindingResult.hasErrors()){
             return new ResponseEntity<>("Campos mal o email invalido", HttpStatus.BAD_REQUEST);
         }
-        if(customerService.existsByCustomer(customerDto.getNameCustomer())){
+        if(Boolean.TRUE.equals(customerService.existsByCustomer(customerDto.getNameCustomer()))){
             return new ResponseEntity<>("Ese nombre ya existe", HttpStatus.BAD_REQUEST);
         }
-        if(customerService.existsByEmail(customerDto.getEmail())){
+        if(Boolean.TRUE.equals(customerService.existsByEmail(customerDto.getEmail()))){
             return new ResponseEntity<>("Ese email ya existe", HttpStatus.BAD_REQUEST);
         }
 
@@ -70,10 +70,10 @@ public class AuthController {
                 customerDto.getEmail(), passwordEncoder.encode(customerDto.getPassword()));
 
         Set<Role> roles = new HashSet<>();
-        if(roleService.getByRoleName(RoleName.ROLE_USER).isPresent())
-            roles.add(roleService.getByRoleName(RoleName.ROLE_USER).get());
-        if(customerDto.getRoles().contains(ADMIN) && roleService.getByRoleName(RoleName.ROLE_ADMIN).isPresent())
-            roles.add(roleService.getByRoleName(RoleName.ROLE_ADMIN).get());
+        roleService.getByRoleName(RoleName.ROLE_USER).ifPresent(roles::add);
+        if(customerDto.getRoles().contains(ADMIN))
+            roleService.getByRoleName(RoleName.ROLE_ADMIN).ifPresent(roles::add);
+
         customer.setRoles(roles);
 
         customerService.save(customer);

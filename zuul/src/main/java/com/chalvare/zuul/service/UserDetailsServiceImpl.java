@@ -1,5 +1,6 @@
 package com.chalvare.zuul.service;
 
+import com.chalvare.zuul.security.entity.Customer;
 import com.chalvare.zuul.security.entity.CustomerMain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 /**
  * Clase que convierte la clase usuario en un UsuarioMain
@@ -17,11 +19,17 @@ import javax.transaction.Transactional;
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    private final CustomerService customerService;
+
     @Autowired
-    CustomerService customerService;
+    public UserDetailsServiceImpl(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String nameCustomer) throws UsernameNotFoundException {
-        return CustomerMain.build(customerService.getByCustomer(nameCustomer).get());
+        final Optional<Customer> byCustomer = customerService.getByCustomer(nameCustomer);
+        if(byCustomer.isEmpty()) throw new UsernameNotFoundException("Username not found");
+        return CustomerMain.build(byCustomer.get());
     }
 }
