@@ -81,6 +81,7 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUser loginUser, BindingResult bindingResult){
         if (bindingResult.hasErrors())
             return new ResponseEntity<>(new JwtDto("Empty Token", loginUser.getNameCustomer(), Collections.emptyList()), HttpStatus.BAD_REQUEST);

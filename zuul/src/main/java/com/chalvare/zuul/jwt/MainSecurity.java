@@ -17,12 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 //con perPostEnabled se usa para indicar a q metodos puede acceder solo el admin
 // Los metodos que no lleven anotación pueden acceder el admin como un generic user
 // @preauthorized solo puede acceder el admin
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableAspectJAutoProxy(proxyTargetClass = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class MainSecurity extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
