@@ -73,7 +73,6 @@ public class AuthController {
         roleService.getByRoleName(RoleName.ROLE_USER).ifPresent(roles::add);
         if(customerDto.getRoles().contains(ADMIN))
             roleService.getByRoleName(RoleName.ROLE_ADMIN).ifPresent(roles::add);
-
         customer.setRoles(roles);
 
         customerService.save(customer);
@@ -82,7 +81,6 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<JwtDto> login(@Valid @RequestBody LoginUser loginUser, BindingResult bindingResult){
         if (bindingResult.hasErrors())
             return new ResponseEntity<>(new JwtDto("Empty Token", loginUser.getNameCustomer(), Collections.emptyList()), HttpStatus.BAD_REQUEST);

@@ -4,6 +4,7 @@ import com.chalvare.zuul.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -21,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 // Los metodos que no lleven anotación pueden acceder el admin como un generic user
 // @preauthorized solo puede acceder el admin
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class MainSecurity extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;

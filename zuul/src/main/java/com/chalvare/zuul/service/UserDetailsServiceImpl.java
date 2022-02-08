@@ -29,7 +29,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String nameCustomer) throws UsernameNotFoundException {
         final Optional<Customer> byCustomer = customerService.getByCustomer(nameCustomer);
-        if(byCustomer.isEmpty()) throw new UsernameNotFoundException("Username not found");
+        if(byCustomer.isEmpty())
+            throw new UsernameNotFoundException("Customer not found");
         return CustomerMain.build(byCustomer.get());
     }
 }
