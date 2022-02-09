@@ -1,6 +1,6 @@
 package com.chalvare.ipandreu.service;
 
-import com.chalvare.ipandreu.service.domain.Customer;
+import com.chalvare.ipandreu.domain.Customer;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

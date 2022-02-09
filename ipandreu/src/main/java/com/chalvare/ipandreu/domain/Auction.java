@@ -1,24 +1,24 @@
-package com.chalvare.ipandreu.service.domain;
+package com.chalvare.ipandreu.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.time.Instant;
 import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Auction {
-    @Id
-    private String id;
+public class Auction implements Serializable {
+
+    private String idAuction;
     private String articleId;
-    private LocalDate initDate;
-    private LocalDate endDate;
+    private Instant initDate;
+    private Instant endDate;
     private List<String> bets;
     private List<String> customers;
 

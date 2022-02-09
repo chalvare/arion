@@ -1,6 +1,7 @@
 package com.chalvare.ipandreu.controller;
 
-import com.chalvare.ipandreu.service.domain.Customer;
+import com.chalvare.ipandreu.domain.Customer;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -17,6 +18,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @ExtendWith(SpringExtension.class)
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
+@Disabled
 class CustomerControllerTestIT {
 
     @LocalServerPort

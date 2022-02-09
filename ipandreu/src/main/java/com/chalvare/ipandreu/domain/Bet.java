@@ -1,23 +1,24 @@
-package com.chalvare.ipandreu.service.domain;
+package com.chalvare.ipandreu.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.Instant;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Bet {
-    @Id
-    private String id;
+public class Bet implements Serializable {
+
+    private String idBet;
     private BigDecimal amount;
-    private LocalDate date;
+    private Instant date;
     private String customerId;
     private String articleId;
     private String auctionId;

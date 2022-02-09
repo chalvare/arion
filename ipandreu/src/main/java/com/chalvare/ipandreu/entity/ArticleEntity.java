@@ -1,11 +1,11 @@
-package com.chalvare.ipandreu.service.domain;
+package com.chalvare.ipandreu.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -13,10 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Article {
+public class ArticleEntity implements Serializable {
 
-    @Id
-    private String id;
+    private String idArticle;
     private String name;
     private String description;
     private BigDecimal initPrice;

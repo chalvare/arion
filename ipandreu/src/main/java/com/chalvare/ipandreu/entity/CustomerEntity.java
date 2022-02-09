@@ -1,18 +1,13 @@
-package com.chalvare.ipandreu.repository.entity;
+package com.chalvare.ipandreu.entity;
 
 
-import com.chalvare.ipandreu.service.domain.Article;
-import com.chalvare.ipandreu.service.domain.Auction;
-import com.chalvare.ipandreu.service.domain.Bet;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -22,13 +17,12 @@ import java.util.List;
 @Document(collection = "customers")
 public class CustomerEntity implements Serializable {
 
-    @Id
-    private String id;
+    private String idCustomer;
     private String name;
-    private LocalDate birthday;
+    private String birthday;
     private String email;
     private int age;
-    private List<Auction> auctions;
-    private List<Article>articles;
-    private List<Bet>bets;
+    private List<AuctionEntity> auctions;
+    private List<ArticleEntity>articles;
+    private List<BetEntity>bets;
 }

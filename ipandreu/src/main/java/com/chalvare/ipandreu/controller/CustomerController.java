@@ -1,9 +1,10 @@
 package com.chalvare.ipandreu.controller;
 
 
-import com.chalvare.ipandreu.controller.dto.CustomerDTO;
+import com.chalvare.ipandreu.domain.Customer;
+import com.chalvare.ipandreu.dto.CustomerDTO;
+import com.chalvare.ipandreu.service.CustomerMapper;
 import com.chalvare.ipandreu.service.CustomerService;
-import com.chalvare.ipandreu.service.domain.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/customers")
@@ -28,19 +30,14 @@ public class CustomerController {
 
     @GetMapping("customers")
     public Flux<CustomerDTO> getCustomers(){
-        return customerService.getCustomers().map(c->CustomerDTO.builder().id(c.getId()).name(c.getName()).age(c.getAge())
-                .build());
+        final Flux<CustomerDTO> map = customerService.getCustomers().map(CustomerMapper.INSTANCE::toCustomerDto);
+        final List<CustomerDTO> block = map.collectList().block();
+        return map;
     }
 
     @PostMapping("customers")
     public Mono<CustomerDTO> saveCustomer(@RequestBody Customer customer){
-        return customerService.save(customer).map(c->
-                CustomerDTO.builder()
-                        .id(c.getId()).name(c.getName()).age(c.getAge()).email(c.getEmail()).birthday(c.getBirthday())
-                        .auctions(c.getAuctions())
-                        .articles(c.getArticles())
-                        .bets(c.getBets())
-                .build());
+        return customerService.save(customer).map(CustomerMapper.INSTANCE::toCustomerDto);
     }
 
     @GetMapping(value = "/hello")

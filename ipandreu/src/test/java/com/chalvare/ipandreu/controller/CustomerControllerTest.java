@@ -1,8 +1,8 @@
 package com.chalvare.ipandreu.controller;
 
-import com.chalvare.ipandreu.controller.dto.CustomerDTO;
+import com.chalvare.ipandreu.dto.CustomerDTO;
 import com.chalvare.ipandreu.service.CustomerService;
-import com.chalvare.ipandreu.service.domain.Customer;
+import com.chalvare.ipandreu.domain.Customer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,6 +14,7 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,7 +37,7 @@ class CustomerControllerTest {
         //Given
 
         final Customer customer = Customer.builder()
-                .id(ID)
+                .idCustomer(ID)
                 .name(NAME)
                 .age(AGE)
                 .build();
@@ -44,12 +45,12 @@ class CustomerControllerTest {
 
         //When
         final Flux<CustomerDTO> customers = customerController.getCustomers();
-
+        final List<CustomerDTO> block = customers.collectList().block();
         //Then
         StepVerifier
                 .create(customers)
                 .assertNext(c->{
-                    assertEquals(ID,c.getId());
+                    assertEquals(ID,c.getIdCustomer());
                     assertEquals(NAME,c.getName());
                     assertEquals(AGE,c.getAge());
                 })
@@ -60,7 +61,7 @@ class CustomerControllerTest {
     @Test
     void saveCustomer(){
         //Given
-        final Customer customer = Customer.builder().id(ID).name(NAME).age(AGE).build();
+        final Customer customer = Customer.builder().idCustomer(ID).name(NAME).age(AGE).build();
 
         //When
         Mockito.when(customerService.save(Mockito.any(Customer.class))).thenReturn(Mono.just(customer));
@@ -70,7 +71,7 @@ class CustomerControllerTest {
         StepVerifier
                 .create(customerDTO)
                 .assertNext(c->{
-                    assertEquals(ID,c.getId());
+                    assertEquals(ID,c.getIdCustomer());
                     assertEquals(NAME,c.getName());
                     assertEquals(AGE,c.getAge());
                 })
