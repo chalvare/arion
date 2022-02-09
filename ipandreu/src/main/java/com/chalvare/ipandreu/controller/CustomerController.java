@@ -13,7 +13,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequestMapping("/customers")
@@ -30,9 +29,7 @@ public class CustomerController {
 
     @GetMapping("customers")
     public Flux<CustomerDTO> getCustomers(){
-        final Flux<CustomerDTO> map = customerService.getCustomers().map(CustomerMapper.INSTANCE::toCustomerDto);
-        final List<CustomerDTO> block = map.collectList().block();
-        return map;
+        return customerService.getCustomers().map(CustomerMapper.INSTANCE::toCustomerDto);
     }
 
     @PostMapping("customers")

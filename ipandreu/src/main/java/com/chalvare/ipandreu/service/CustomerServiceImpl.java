@@ -14,7 +14,6 @@ import reactor.core.publisher.Mono;
 
 import java.time.Instant;
 import java.util.Collections;
-import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -34,9 +33,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Retry(name = CUSTOMER_CB)
     @CircuitBreaker(name = CUSTOMER_CB, fallbackMethod = "justFallback")
     public Flux<Customer> getCustomers() {
-        final Flux<Customer> map = customerRepository.findAll().map(CustomerMapper.INSTANCE::toCustomer);
-        final List<Customer> block = map.collectList().block();
-        return map;
+        return customerRepository.findAll().map(CustomerMapper.INSTANCE::toCustomer);
     }
 
     @Override
