@@ -1,10 +1,10 @@
 package com.chalvare.ipandreu.entity;
 
-import com.chalvare.ipandreu.domain.ArticleState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -16,6 +16,7 @@ import java.util.List;
 @Builder
 public class ArticleEntity implements Serializable {
 
+    @Indexed(unique=true)
     private String idArticle;
     private String name;
     private String description;

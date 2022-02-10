@@ -1,10 +1,10 @@
 package com.chalvare.ipandreu.entity;
 
-import com.chalvare.ipandreu.domain.AuctionState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AuctionEntity implements Serializable {
 
+    @Indexed(unique=true)
     private String idAuction;
     private String articleId;
     private String initDate;

@@ -1,10 +1,10 @@
 package com.chalvare.ipandreu.entity;
 
-import com.chalvare.ipandreu.domain.BetState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 @Builder
 public class BetEntity implements Serializable {
 
+    @Indexed(unique=true)
     private String idBet;
     private BigDecimal amount;
     private String state;
