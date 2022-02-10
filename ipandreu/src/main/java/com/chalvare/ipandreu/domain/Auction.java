@@ -16,13 +16,12 @@ import java.util.List;
 public class Auction implements Serializable {
 
     private String idAuction;
-    private String articleId;
+    private String idArticle;
     private Instant initDate;
     private Instant endDate;
     private AuctionState state;
     private List<String> bets;
     private List<String> customers;
-
 
 }
 

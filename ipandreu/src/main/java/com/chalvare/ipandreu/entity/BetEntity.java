@@ -20,8 +20,8 @@ public class BetEntity implements Serializable {
     private BigDecimal amount;
     private String state;
     private String date;
-    private String customerId;
-    private String articleId;
-    private String auctionId;
+    private String idCustomer;
+    private String idArticle;
+    private String idAuction;
 }
 
