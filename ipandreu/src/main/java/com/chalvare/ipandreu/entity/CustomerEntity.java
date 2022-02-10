@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 @Document(collection = "customers")
 public class CustomerEntity implements Serializable {
-
+    //TODO eliminar datos personales (name, birthday, email y edad)
     private String idCustomer;
     private String name;
     private String birthday;

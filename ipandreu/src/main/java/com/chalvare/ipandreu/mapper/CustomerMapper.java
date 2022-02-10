@@ -1,13 +1,13 @@
-package com.chalvare.ipandreu.service;
+package com.chalvare.ipandreu.mapper;
 
 import com.chalvare.ipandreu.domain.Customer;
 import com.chalvare.ipandreu.dto.CustomerDTO;
 import com.chalvare.ipandreu.entity.CustomerEntity;
 import org.mapstruct.factory.Mappers;
-
+import org.mapstruct.Mapper;
 import java.time.Instant;
 
-@org.mapstruct.Mapper
+@Mapper
 public interface CustomerMapper {
     CustomerMapper INSTANCE  = Mappers.getMapper(CustomerMapper.class);
 

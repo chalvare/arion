@@ -1,7 +1,7 @@
 package com.chalvare.ipandreu.controller;
 
 import com.chalvare.ipandreu.dto.CustomerDTO;
-import com.chalvare.ipandreu.service.CustomerService;
+import com.chalvare.ipandreu.service.customer.CustomerService;
 import com.chalvare.ipandreu.domain.Customer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

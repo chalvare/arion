@@ -3,8 +3,8 @@ package com.chalvare.ipandreu.controller;
 
 import com.chalvare.ipandreu.domain.Customer;
 import com.chalvare.ipandreu.dto.CustomerDTO;
-import com.chalvare.ipandreu.service.CustomerMapper;
-import com.chalvare.ipandreu.service.CustomerService;
+import com.chalvare.ipandreu.mapper.CustomerMapper;
+import com.chalvare.ipandreu.service.customer.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,10 @@ import reactor.core.publisher.Mono;
 
 import java.util.Date;
 
+/**
+ * CustomerController
+ * Gestión básica del customer (insertar, borrar, actualizar, listar)
+ */
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
