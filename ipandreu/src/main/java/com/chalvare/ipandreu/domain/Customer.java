@@ -19,6 +19,7 @@ public class Customer implements Serializable {
     private String idCustomer;
     private String name;
     private Instant birthday;
+    private CustomerState state;
     private String email;
     private int age;
     private List<Auction> auctions;

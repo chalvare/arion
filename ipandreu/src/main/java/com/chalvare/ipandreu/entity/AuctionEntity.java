@@ -1,5 +1,6 @@
 package com.chalvare.ipandreu.entity;
 
+import com.chalvare.ipandreu.domain.AuctionState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class AuctionEntity implements Serializable {
     private String articleId;
     private String initDate;
     private String endDate;
+    private String state;
     private List<String> bets;
     private List<String> customers;
 

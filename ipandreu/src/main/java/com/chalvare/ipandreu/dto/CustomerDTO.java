@@ -4,6 +4,7 @@ package com.chalvare.ipandreu.dto;
 import com.chalvare.ipandreu.domain.Article;
 import com.chalvare.ipandreu.domain.Auction;
 import com.chalvare.ipandreu.domain.Bet;
+import com.chalvare.ipandreu.domain.CustomerState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class CustomerDTO implements Serializable {
     private String idCustomer;
     private String name;
     private Instant birthday;
+    private CustomerState state;
     private String email;
     private int age;
     private List<Auction> auctions;

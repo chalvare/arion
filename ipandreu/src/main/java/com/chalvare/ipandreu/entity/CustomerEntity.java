@@ -1,6 +1,7 @@
 package com.chalvare.ipandreu.entity;
 
 
+import com.chalvare.ipandreu.domain.CustomerState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class CustomerEntity implements Serializable {
     private String idCustomer;
     private String name;
     private String birthday;
+    private String state;
     private String email;
     private int age;
     private List<AuctionEntity> auctions;

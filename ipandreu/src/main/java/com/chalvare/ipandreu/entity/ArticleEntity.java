@@ -1,5 +1,6 @@
 package com.chalvare.ipandreu.entity;
 
+import com.chalvare.ipandreu.domain.ArticleState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class ArticleEntity implements Serializable {
     private String idArticle;
     private String name;
     private String description;
+    private String state;
     private BigDecimal initPrice;
     private BigDecimal actualPrice;
     private BigDecimal endPrice;

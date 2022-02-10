@@ -2,6 +2,7 @@ package com.chalvare.ipandreu.service.customer;
 
 
 import com.chalvare.ipandreu.domain.Customer;
+import com.chalvare.ipandreu.domain.CustomerState;
 import com.chalvare.ipandreu.mapper.CustomerMapper;
 import com.chalvare.ipandreu.repository.CustomerRepository;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
@@ -20,7 +21,7 @@ import java.util.Collections;
 public class CustomerServiceImpl implements CustomerService{
 
     public static final String CUSTOMER_CB = "customerCB";
-    public static final Customer FALLBACK_DATA = new Customer("CustomerDefaultId", "CustomerNameDefault", Instant.now(),"email",0, Collections.emptyList(),Collections.emptyList(),Collections.emptyList());
+    public static final Customer FALLBACK_DATA = new Customer("CustomerDefaultId", "CustomerNameDefault", Instant.now(), CustomerState.ACTIVE,"email",0, Collections.emptyList(),Collections.emptyList(),Collections.emptyList());
 
     private final CustomerRepository customerRepository;
 

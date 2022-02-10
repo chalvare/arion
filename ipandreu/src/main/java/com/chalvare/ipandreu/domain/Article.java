@@ -18,6 +18,7 @@ public class Article implements Serializable {
     private String idArticle;
     private String name;
     private String description;
+    private ArticleState state;
     private BigDecimal initPrice;
     private BigDecimal actualPrice;
     private BigDecimal endPrice;
