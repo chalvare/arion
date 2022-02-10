@@ -1,5 +1,6 @@
-package com.chalvare.ipandreu.controller;
+package com.chalvare.ipandreu.controller.customer;
 
+import com.chalvare.ipandreu.controller.customer.CustomerController;
 import com.chalvare.ipandreu.dto.CustomerDTO;
 import com.chalvare.ipandreu.service.customer.CustomerService;
 import com.chalvare.ipandreu.domain.Customer;
@@ -22,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CustomerControllerTest {
 
     public static final String ID = "2";
-    public static final String NAME = "Luis";
+    public static final String NAME = "NAME";
     public static final int AGE = 20;
 
     @Mock

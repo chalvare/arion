@@ -1,4 +1,4 @@
-package com.chalvare.ipandreu.service;
+package com.chalvare.ipandreu.service.customer;
 
 import com.chalvare.ipandreu.repository.CustomerRepository;
 import com.chalvare.ipandreu.entity.CustomerEntity;

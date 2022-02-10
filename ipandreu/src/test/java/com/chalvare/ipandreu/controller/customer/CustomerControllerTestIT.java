@@ -1,4 +1,4 @@
-package com.chalvare.ipandreu.controller;
+package com.chalvare.ipandreu.controller.customer;
 
 import com.chalvare.ipandreu.domain.Customer;
 import org.junit.jupiter.api.Disabled;

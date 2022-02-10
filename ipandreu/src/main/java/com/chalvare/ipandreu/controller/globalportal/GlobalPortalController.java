@@ -1,4 +1,4 @@
-package com.chalvare.ipandreu.controller;
+package com.chalvare.ipandreu.controller.globalportal;
 
 import com.chalvare.ipandreu.dto.AuctionDTO;
 import com.chalvare.ipandreu.service.global.GlobalService;

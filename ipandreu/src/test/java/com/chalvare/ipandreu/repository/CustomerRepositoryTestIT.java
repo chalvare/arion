@@ -55,8 +55,17 @@ class CustomerRepositoryTestIT {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Customer.class);
+    }
 
-
+    @Test
+    void getAuctionsFromCustomers(){
+        WebTestClient.bindToServer().baseUrl("http://localhost:"+port).build()
+                .get()
+                .uri("/global/auctions/124")
+                .header(ACCEPT,APPLICATION_JSON_VALUE)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(Customer.class);
     }
 
 
