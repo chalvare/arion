@@ -1,9 +1,9 @@
 package com.chalvare.ipandreu.service.customer;
 
-import com.chalvare.ipandreu.repository.CustomerRepository;
-import com.chalvare.ipandreu.entity.CustomerEntity;
 import com.chalvare.ipandreu.domain.Customer;
-import com.chalvare.ipandreu.service.customer.CustomerServiceImpl;
+import com.chalvare.ipandreu.domain.CustomerState;
+import com.chalvare.ipandreu.entity.CustomerEntity;
+import com.chalvare.ipandreu.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,6 +26,7 @@ class CustomerServiceImplTest {
     public static final String NAME = "Name";
     public static final int AGE = 25;
     public static final String BIRTHDAY = "2022-02-09T13:52:22.688132Z";
+    public static final String ACTIVE = "ACTIVE";
     @Mock
     private CustomerRepository customerRepository;
 
@@ -36,7 +37,11 @@ class CustomerServiceImplTest {
    void getCustomers(){
        //Given
        final Flux<CustomerEntity> customer = Flux.fromIterable(Collections.singletonList(CustomerEntity.builder()
-               .idCustomer(ID).birthday(BIRTHDAY).name(NAME).age(AGE).build()));
+               .idCustomer(ID).birthday(BIRTHDAY).name(NAME).age(AGE).state(ACTIVE)
+               .articles(Collections.emptyList())
+               .auctions(Collections.emptyList())
+               .bets(Collections.emptyList())
+               .build()));
 
        //When
        Mockito.when(customerRepository.findAll()).thenReturn(customer);
@@ -45,7 +50,15 @@ class CustomerServiceImplTest {
        //Then
        StepVerifier
                .create(customers)
-               .assertNext(c->assertEquals(Customer.builder().idCustomer(ID).birthday(Instant.parse(BIRTHDAY)).name(NAME).age(AGE)
+               .assertNext(c->assertEquals(Customer.builder()
+                       .idCustomer(ID)
+                       .birthday(Instant.parse(BIRTHDAY))
+                       .name(NAME)
+                       .age(AGE)
+                       .state(CustomerState.ACTIVE)
+                       .articles(Collections.emptyList())
+                       .auctions(Collections.emptyList())
+                       .bets(Collections.emptyList())
                        .build(),c))
                .verifyComplete();
 
@@ -54,9 +67,15 @@ class CustomerServiceImplTest {
     @Test
     void saveCustomers(){
         //Given
-        CustomerEntity customerEntity = CustomerEntity.builder().birthday(BIRTHDAY).idCustomer(ID).name(NAME).age(AGE)
+        CustomerEntity customerEntity = CustomerEntity.builder().idCustomer(ID).birthday(BIRTHDAY).name(NAME).age(AGE).state(ACTIVE)
+                .articles(Collections.emptyList())
+                .auctions(Collections.emptyList())
+                .bets(Collections.emptyList())
                 .build();
-        Customer customer = Customer.builder().idCustomer(ID).birthday(Instant.parse(BIRTHDAY)).name(NAME).age(AGE)
+        Customer customer = Customer.builder().idCustomer(ID).birthday(Instant.parse(BIRTHDAY)).name(NAME).age(AGE).state(CustomerState.ACTIVE)
+                .articles(Collections.emptyList())
+                .auctions(Collections.emptyList())
+                .bets(Collections.emptyList())
                 .build();
 
         //When
@@ -66,7 +85,15 @@ class CustomerServiceImplTest {
         //Then
         StepVerifier
                 .create(custSaved)
-                .assertNext(c->assertEquals(Customer.builder().birthday(Instant.parse(BIRTHDAY)).idCustomer(ID).name(NAME).age(AGE)
+                .assertNext(c->assertEquals(Customer.builder()
+                        .idCustomer(ID)
+                        .birthday(Instant.parse(BIRTHDAY))
+                        .name(NAME)
+                        .age(AGE)
+                        .state(CustomerState.ACTIVE)
+                        .articles(Collections.emptyList())
+                        .auctions(Collections.emptyList())
+                        .bets(Collections.emptyList())
                         .build(),c))
                 .verifyComplete();
 
