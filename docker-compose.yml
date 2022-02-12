@@ -15,7 +15,7 @@ services:
   mongodb:
     image: mongo
     container_name: mongo
-    restart: always
+    restart: on-failure
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -109,7 +109,7 @@ services:
   eureka:
     build: ./eureka
     container_name: eureka
-    restart: always
+    restart: on-failure
     ports:
       - "8761:8761"
     labels:
@@ -122,7 +122,7 @@ services:
   zuul:
     build: ./zuul
     container_name: zuul
-    restart: always
+    restart: on-failure
     ports:
       - "7000:7000"
     labels:

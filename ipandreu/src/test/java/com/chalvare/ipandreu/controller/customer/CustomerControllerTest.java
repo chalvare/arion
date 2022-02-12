@@ -1,9 +1,8 @@
 package com.chalvare.ipandreu.controller.customer;
 
-import com.chalvare.ipandreu.controller.customer.CustomerController;
+import com.chalvare.ipandreu.domain.Customer;
 import com.chalvare.ipandreu.dto.CustomerDTO;
 import com.chalvare.ipandreu.service.customer.CustomerService;
-import com.chalvare.ipandreu.domain.Customer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,7 +14,6 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -46,7 +44,6 @@ class CustomerControllerTest {
 
         //When
         final Flux<CustomerDTO> customers = customerController.getCustomers();
-        final List<CustomerDTO> block = customers.collectList().block();
         //Then
         StepVerifier
                 .create(customers)
