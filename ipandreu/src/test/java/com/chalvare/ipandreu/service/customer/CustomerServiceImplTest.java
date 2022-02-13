@@ -3,7 +3,7 @@ package com.chalvare.ipandreu.service.customer;
 import com.chalvare.ipandreu.domain.Customer;
 import com.chalvare.ipandreu.domain.CustomerState;
 import com.chalvare.ipandreu.entity.CustomerEntity;
-import com.chalvare.ipandreu.repository.CustomerRepository;
+import com.chalvare.ipandreu.repository.customer.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

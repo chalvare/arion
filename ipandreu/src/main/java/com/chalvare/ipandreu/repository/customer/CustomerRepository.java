@@ -1,4 +1,4 @@
-package com.chalvare.ipandreu.repository;
+package com.chalvare.ipandreu.repository.customer;
 
 import com.chalvare.ipandreu.entity.CustomerEntity;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;

@@ -6,10 +6,7 @@ import com.chalvare.ipandreu.mapper.AuctionMapper;
 import com.chalvare.ipandreu.service.auction.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -31,5 +28,20 @@ public class AuctionController {
                                         @PathVariable("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
                                         @PathVariable("to") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to){
         return auctionService.save(idArticle, from, to).map(AuctionMapper.INSTANCE::toAuctionDto);
+    }
+
+    @PutMapping("auctions/{id}/state")
+    public Mono<AuctionDTO> updateAuctionState(@PathVariable String id, @RequestBody String state){
+        return auctionService.updateAuctionState(id, state.toUpperCase()).map(AuctionMapper.INSTANCE::toAuctionDto);
+    }
+
+    @PutMapping("auctions/{id}/customer")
+    public Mono<AuctionDTO> updateAuctionCustomer(@PathVariable String id, @RequestBody String customer){
+        return auctionService.updateAuctionCustomer(id, customer).map(AuctionMapper.INSTANCE::toAuctionDto);
+    }
+
+    @PutMapping("auctions/{id}/bet")
+    public Mono<AuctionDTO> updateAuctionBet(@PathVariable String id, @RequestBody String bet){
+        return auctionService.updateAuctionBet(id, bet).map(AuctionMapper.INSTANCE::toAuctionDto);
     }
 }

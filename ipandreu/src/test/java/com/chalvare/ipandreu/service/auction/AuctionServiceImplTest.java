@@ -3,7 +3,7 @@ package com.chalvare.ipandreu.service.auction;
 import com.chalvare.ipandreu.domain.Auction;
 import com.chalvare.ipandreu.domain.AuctionState;
 import com.chalvare.ipandreu.entity.AuctionEntity;
-import com.chalvare.ipandreu.repository.AuctionRepository;
+import com.chalvare.ipandreu.repository.auction.AuctionRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

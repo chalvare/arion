@@ -4,7 +4,7 @@ package com.chalvare.ipandreu.service.customer;
 import com.chalvare.ipandreu.domain.Customer;
 import com.chalvare.ipandreu.domain.CustomerState;
 import com.chalvare.ipandreu.mapper.CustomerMapper;
-import com.chalvare.ipandreu.repository.CustomerRepository;
+import com.chalvare.ipandreu.repository.customer.CustomerRepository;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;

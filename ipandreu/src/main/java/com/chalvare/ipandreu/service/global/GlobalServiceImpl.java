@@ -1,7 +1,7 @@
 package com.chalvare.ipandreu.service.global;
 
 import com.chalvare.ipandreu.dto.AuctionDTO;
-import com.chalvare.ipandreu.repository.CustomerRepository;
+import com.chalvare.ipandreu.repository.customer.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

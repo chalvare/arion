@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +18,8 @@ import java.util.List;
 @Document(collection = "auctions")
 public class AuctionEntity implements Serializable {
 
-    @Indexed(unique=true)
+    @Id
+    private String id;
     private String idAuction;
     private String idArticle;
     private String initDate;

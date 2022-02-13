@@ -3,7 +3,7 @@ package com.chalvare.ipandreu.service.global;
 import com.chalvare.ipandreu.dto.AuctionDTO;
 import com.chalvare.ipandreu.entity.AuctionEntity;
 import com.chalvare.ipandreu.entity.CustomerEntity;
-import com.chalvare.ipandreu.repository.CustomerRepository;
+import com.chalvare.ipandreu.repository.customer.CustomerRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
