@@ -40,7 +40,7 @@ public class AuctionController {
         return auctionService.updateAuctionCustomer(id, customer).map(AuctionMapper.INSTANCE::toAuctionDto);
     }
 
-    @PutMapping("auctions/{id}/bet")
+    @PostMapping("auctions/{id}/bet")
     public Mono<AuctionDTO> updateAuctionBet(@PathVariable String id, @RequestBody String bet){
         return auctionService.updateAuctionBet(id, bet).map(AuctionMapper.INSTANCE::toAuctionDto);
     }

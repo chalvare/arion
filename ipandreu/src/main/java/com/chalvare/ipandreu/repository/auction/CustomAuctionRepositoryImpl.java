@@ -2,6 +2,7 @@ package com.chalvare.ipandreu.repository.auction;
 
 import com.chalvare.ipandreu.entity.AuctionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -28,6 +29,7 @@ public class CustomAuctionRepositoryImpl implements  CustomAuctionRepository{
         return mongoTemplate.findAndModify(
                 new Query(Criteria.where(ID).is(id)),
                 new Update().set(STATE, state),
+                new FindAndModifyOptions().returnNew(true),
                 AuctionEntity.class);
     }
 
@@ -36,6 +38,7 @@ public class CustomAuctionRepositoryImpl implements  CustomAuctionRepository{
         return mongoTemplate.findAndModify(
                 new Query(Criteria.where(ID).is(id)),
                 new Update().addToSet(CUSTOMERS, customer),
+                new FindAndModifyOptions().returnNew(true),
                 AuctionEntity.class);
     }
 
@@ -44,6 +47,7 @@ public class CustomAuctionRepositoryImpl implements  CustomAuctionRepository{
         return mongoTemplate.findAndModify(
                 new Query(Criteria.where(ID).is(id)),
                 new Update().addToSet(BETS, bet),
+                new FindAndModifyOptions().returnNew(true),
                 AuctionEntity.class);
     }
 }
