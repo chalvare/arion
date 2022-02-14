@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Auction implements Serializable {
 
+    private String id;
     private String idAuction;
     private String idArticle;
     private Instant initDate;

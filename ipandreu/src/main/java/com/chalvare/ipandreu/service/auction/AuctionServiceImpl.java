@@ -2,6 +2,7 @@ package com.chalvare.ipandreu.service.auction;
 
 import com.chalvare.ipandreu.domain.Auction;
 import com.chalvare.ipandreu.domain.AuctionState;
+import com.chalvare.ipandreu.entity.AuctionEntity;
 import com.chalvare.ipandreu.mapper.AuctionMapper;
 import com.chalvare.ipandreu.repository.auction.AuctionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,7 @@ public class AuctionServiceImpl implements AuctionService{
 
     @Override
     public Mono<Auction> save(UUID idArticle, LocalDateTime from, LocalDateTime to) {
-        return auctionRepository.insert(AuctionMapper.INSTANCE.toAuctionEntity(buildAuction(idArticle, from, to)))
-                .map(AuctionMapper.INSTANCE::toAuction);
+        return auctionRepository.save(AuctionMapper.INSTANCE.toAuctionEntity(buildAuction(idArticle, from, to))).map(AuctionMapper.INSTANCE::toAuction);
     }
 
     @Override
@@ -42,6 +42,16 @@ public class AuctionServiceImpl implements AuctionService{
     @Override
     public Mono<Auction> updateAuctionBet(String id, String bet) {
         return auctionRepository.updateBet(id, bet).map(AuctionMapper.INSTANCE::toAuction);
+    }
+
+    @Override
+    public Mono<Auction> findById(String idAuction) {
+        return auctionRepository.findById(idAuction).map(AuctionMapper.INSTANCE::toAuction);
+    }
+
+    @Override
+    public Mono<Void> deleteById(String idAuction) {
+        return auctionRepository.deleteById(idAuction);
     }
 
 

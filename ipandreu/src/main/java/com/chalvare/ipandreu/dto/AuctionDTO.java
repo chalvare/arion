@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class AuctionDTO {
 
+    private String id;
     private String idAuction;
     private String idArticle;
     private Instant initDate;

@@ -23,6 +23,11 @@ public class AuctionController {
         this.auctionService = auctionService;
     }
 
+    @GetMapping("auctions/{idAuction}")
+    public Mono<AuctionDTO> getAuction(@PathVariable("idAuction") String idAuction){
+        return auctionService.findById(idAuction).map(AuctionMapper.INSTANCE::toAuctionDto);
+    }
+
     @PostMapping("auctions/{idArticle}/{from}/{to}")
     public Mono<AuctionDTO> saveAuction(@PathVariable("idArticle") UUID idArticle,
                                         @PathVariable("from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime from,
@@ -40,8 +45,13 @@ public class AuctionController {
         return auctionService.updateAuctionCustomer(id, customer).map(AuctionMapper.INSTANCE::toAuctionDto);
     }
 
-    @PostMapping("auctions/{id}/bet")
+    @PutMapping("auctions/{id}/bet")
     public Mono<AuctionDTO> updateAuctionBet(@PathVariable String id, @RequestBody String bet){
         return auctionService.updateAuctionBet(id, bet).map(AuctionMapper.INSTANCE::toAuctionDto);
+    }
+
+    @DeleteMapping("auctions/{idAuction}")
+    public Mono<Void> deleteAuction(@PathVariable("idAuction") String idAuction){
+        return auctionService.deleteById(idAuction);
     }
 }

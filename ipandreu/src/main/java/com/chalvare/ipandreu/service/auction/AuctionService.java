@@ -10,4 +10,6 @@ public interface AuctionService {
     Mono<Auction> updateAuctionState(String id, String state);
     Mono<Auction> updateAuctionCustomer(String id, String customer);
     Mono<Auction> updateAuctionBet(String id, String bet);
+    Mono<Auction> findById(String idAuction);
+    Mono<Void> deleteById(String idAuction);
 }
