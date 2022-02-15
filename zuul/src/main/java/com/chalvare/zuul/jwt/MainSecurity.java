@@ -2,6 +2,7 @@ package com.chalvare.zuul.jwt;
 
 import com.chalvare.zuul.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -17,12 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-//@EnableWebSecurity
+@EnableWebSecurity
 //con perPostEnabled se usa para indicar a q metodos puede acceder solo el admin
 // Los metodos que no lleven anotación pueden acceder el admin como un generic user
-// @preauthorized solo puede acceder el admin
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
-//@EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+@EnableOAuth2Sso
 public class MainSecurity extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
@@ -61,14 +62,16 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //Desactivamos cookies ya que enviamos un token
         // cada vez que hacemos una petición
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
+                //.anyRequest().permitAll()
+                .antMatchers("/auth/signin").permitAll()
+                .antMatchers("/auth/signup").permitAll()
+                .antMatchers("/customers/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)

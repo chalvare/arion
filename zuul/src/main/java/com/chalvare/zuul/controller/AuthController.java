@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -94,5 +95,17 @@ public class AuthController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
         return new ResponseEntity<>(jwtDto, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/hello")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String helloWorld() {
+        return "Hello World111! " + new Date();
+    }
+
+    @GetMapping(value = "/hello2")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public String helloWorld2() {
+        return "Hello World2222! " + new Date();
     }
 }
