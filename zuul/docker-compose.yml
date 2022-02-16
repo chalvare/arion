@@ -3,6 +3,8 @@ services:
   app:
     build: .
     container_name: zuul
+    depends_on:
+      - mysql
     ports:
       - "7000:7000"
     labels:
@@ -10,7 +12,8 @@ services:
 
   mysql:
     image: mysql
-    restart: always
+    container_name: mysqlArion
+    restart: on-failure
     environment:
       MYSQL_DATABASE: 'arion'
       # So you don't have to use root, but you can if you like
